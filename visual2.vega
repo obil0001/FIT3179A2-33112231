@@ -1,0 +1,48 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "#F5F5F5",
+  "title": "Comparing Tax and Income across Australia",
+  
+  "data": {
+    "url": "https://raw.githubusercontent.com/obil0001/FIT3179A2/refs/heads/main/data3.csv",
+    "format": {"parse": {"date": "date"}}
+  },
+  
+  "repeat": {"column": ["Average taxable income or loss", "Average salary and wages", "Average net tax"]},
+  "spec": {
+    "width": 220,
+    "layer": [
+      {
+        "params": [
+          {
+            
+            "name": "toggleOrigin",
+            "bind": {"input": "checkbox"}
+          },
+          {
+            "name": "highlight",
+            "select": {"type": "point", "on": "pointerover"}
+          },
+          {"name": "select", "select": "point"}
+        ],
+        "mark": "bar",
+        "encoding": {
+          "x": {"field": "State", "type": "ordinal"},
+          "y": {
+            "field": {"repeat": "column"},
+            "type": "quantitative"
+          },
+          "fillOpacity": {
+          "condition": {"param": "select", "value": 1},
+          "value": 0.3
+          },
+          "color": {"value": "green"},
+          "tooltip": [
+            {"field": "State", "type": "nominal", "title": "State"},
+            {"field": {"repeat": "column"}, "type": "quantitative", "title": "Dollar Value $"}
+          ]
+        }
+      }
+    ]
+  }
+}
